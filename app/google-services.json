@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "608067033582",
+    "firebase_url": "https://onlineshopping-5e9b6.firebaseio.com",
+    "project_id": "onlineshopping-5e9b6",
+    "storage_bucket": "onlineshopping-5e9b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608067033582:android:e91cfe0219410410cfd6ff",
+        "android_client_info": {
+          "package_name": "com.example.apnadarzi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608067033582-8n8p6649chagr1rb8v1arlq7h5dmml4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBayi-uIuwlRQcl4zAtVnWaFbOBu5nJxC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608067033582-8n8p6649chagr1rb8v1arlq7h5dmml4d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608067033582:android:5aec84ec5b903236cfd6ff",
+        "android_client_info": {
+          "package_name": "com.example.onlineshopping"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608067033582-8n8p6649chagr1rb8v1arlq7h5dmml4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBayi-uIuwlRQcl4zAtVnWaFbOBu5nJxC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608067033582-8n8p6649chagr1rb8v1arlq7h5dmml4d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
