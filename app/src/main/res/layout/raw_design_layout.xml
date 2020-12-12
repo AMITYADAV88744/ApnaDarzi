@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    app:cardElevation="15dp"
+    android:background="@color/background"
+    android:id="@+id/raw_design_layout">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/product_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="2dp"
+
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/l1"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/product_image"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text=" Designer : "
+                android:textStyle="bold"
+                android:textAppearance="?android:textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/designer_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Amit Yadav" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/l2"
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/l1">
+
+            <TextView
+                android:text=" Rating : "
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:layout_height="match_parent"
+                />
+
+
+            <RatingBar
+                android:id="@+id/d_rating"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:numStars="5" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

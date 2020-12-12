@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Upload_Design">
+    <ImageView
+        android:id="@+id/select_design_image"
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:cropToPadding="false"
+        android:scaleType="centerCrop"
+        android:src="@drawable/select_product_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        />
+    <EditText
+        android:id="@+id/design_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/select_design_image"
+        android:inputType="textMultiLine"
+        android:layout_marginTop="20dp"
+        android:padding="20dp"
+        android:hint="Design Title"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:background="@drawable/input_design"
+        />
+
+
+    <EditText
+        android:id="@+id/design_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/design_title"
+        android:inputType="textMultiLine"
+        android:layout_marginTop="6dp"
+        android:padding="20dp"
+        android:hint="Design Description..."
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:background="@drawable/input_design"
+        />
+
+
+    <EditText
+        android:id="@+id/design_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/design_description"
+        android:inputType="textMultiLine"
+        android:layout_marginTop="6dp"
+        android:padding="20dp"
+        android:hint="Design Category"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:background="@drawable/input_design"
+        />
+
+
+    <Button
+        android:id="@+id/add_new_design"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/design_category"
+        android:text="Upload New Design"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:padding="17dp"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:background="@drawable/buttons"
+        />
+
+</RelativeLayout>

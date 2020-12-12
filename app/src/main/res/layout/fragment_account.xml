@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AccountFragment">
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/banner"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
+          android:src="@drawable/nav" />
+
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="211dp"
+            android:layout_height="125dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="100dp"
+            android:scaleType="fitCenter"
+         />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="130dp"
+
+            android:layout_marginTop="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="130dp"
+            android:visibility="visible" />
+
+
+        <ImageView
+            android:id="@+id/photo_upload"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="194dp"
+            android:layout_marginLeft="190dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_photo_upload_24"/>
+
+        <TextView
+            android:id="@+id/pofile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_marginTop="227dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="150dp"
+            android:layout_marginEnd="150dp" />
+
+        <TextView
+            android:ems="10"
+            android:id="@+id/pofile_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text=" Profile Setting"
+            android:textSize="25sp"
+            android:layout_marginTop="300dp"
+            android:layout_marginStart="10dp" />
+        <TextView
+            android:id="@+id/profile_order"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text=" My Order"
+            android:ems="10"
+            android:textSize="25sp"
+            android:layout_marginTop="355dp"
+            android:layout_marginStart="10dp" />
+
+        <TextView
+            android:id="@+id/pofile_dupload"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:textSize="25sp"
+            android:text=" Uplaod Design"
+            android:layout_marginTop="410dp"
+            android:layout_marginStart="10dp"/>
+
+        <Button
+            android:id="@+id/sign_out"
+            android:layout_width="119dp"
+            android:layout_height="48dp"
+            android:text="LogOut"
+            android:textSize="20sp"
+            android:layout_marginTop="500dp"
+            android:background="@drawable/buttons"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="140dp"
+            android:layout_marginEnd="140dp"
+            />
+    </RelativeLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</FrameLayout>
