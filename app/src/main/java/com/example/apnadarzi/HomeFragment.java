@@ -2,10 +2,9 @@ package com.example.apnadarzi;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -51,14 +50,13 @@ public class HomeFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
     }
-/*
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         getLifecycle().addObserver(new TimberLogger(this));
     }
-*/
 
 
     private static class HomeFragmentPageAdapter extends FragmentPagerAdapter {
@@ -73,7 +71,15 @@ public class HomeFragment extends Fragment {
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            return HomeChildFragment.newInstance(position, name);
+
+            if (position == 0) {
+                return HomeChildFragmentMen.newInstance(position, name);
+            } else if (position == 1) {
+                return HomeChildFragmentWomen.newInstance(position, name);
+            } else {
+                return HomeChildFragmentKid.newInstance(position, name);
+            }
+            //return HomeChildFragment.newInstance(position, name);
         }
 
         @Override

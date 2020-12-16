@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProductDetailsActivity">
-<ImageView
-    android:id="@+id/product_image_details"
-    android:layout_width="match_parent"
-    android:layout_height="260dp"
-    android:scaleType="centerCrop"
-    />
+    tools:context=".Product_Detail_Women">
+
+    <ImageView
+        android:id="@+id/product_image_details"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:scaleType="centerCrop" />
+
     <TextView
         android:id="@+id/product_name_details"
         android:layout_width="match_parent"

@@ -6,6 +6,17 @@ public class Product {
     String price;
     String description;
 
+
+    String pid;
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
     public String getPname() {
         return pname;
     }

@@ -1,10 +1,7 @@
 package com.example.apnadarzi;
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
@@ -19,7 +16,6 @@ import com.example.apnadarzi.Model.Designer;
 import com.example.apnadarzi.ViewHolder.DesignerViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -44,21 +40,29 @@ public class DesignerFragment extends Fragment {
       //  setHasOptionsMenu(true);
         View rootView=inflater.inflate(R.layout.fragment_designer,null);
         ProductsRef = FirebaseDatabase.getInstance().getReference().child("Designer");
-       RatingBar simpleRatingBar = (RatingBar) rootView.findViewById(R.id.d_rating); // initiate a rating bar
+       RatingBar simpleRatingBar = rootView.findViewById(R.id.d_rating); // initiate a rating bar
         //Float ratingNumber = simpleRatingBar.getRating();
 
         //REFERENCE
-        rv= (RecyclerView) rootView.findViewById(R.id.recycler_menu);
+        rv = rootView.findViewById(R.id.recycler_menu);
 
         //LAYOUT MANAGER
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         //ADAPTER
         //rv.setAdapter(new MyAdapter(getActivity(), designername));
-       // rv.setAdapter(new MyAdapter(getActivity(),rating));
+        // rv.setAdapter(new MyAdapter(getActivity(),rating));
 
         return rootView;
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        getLifecycle().addObserver(new TimberLogger(this));
+    }
+
 
     @Override
     public void onStart() {

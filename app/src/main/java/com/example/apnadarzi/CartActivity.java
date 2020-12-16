@@ -44,17 +44,16 @@ public class CartActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        NextProcessBtn = (Button)findViewById(R.id.next_btn);
-        txtTotalAmount = (TextView)findViewById(R.id.total_price);
-        txtMsg1 = (TextView)findViewById(R.id.msg1);
+        NextProcessBtn = findViewById(R.id.next_btn);
+        txtTotalAmount = findViewById(R.id.total_price);
+        txtMsg1 = findViewById(R.id.msg1);
         NextProcessBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                txtTotalAmount.setText("Total Price = $"+String.valueOf(overTotalPrice));
-                Intent intent = new Intent(CartActivity.this,ConfirmFinalOrderActivity.class);
+                txtTotalAmount.setText("Total Price = $" + overTotalPrice);
+                Intent intent = new Intent(CartActivity.this, ConfirmFinalOrderActivity.class);
                 intent.putExtra("Total Price", String.valueOf(overTotalPrice));
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -63,7 +62,7 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        CheckOrderState();
+       // CheckOrderState();
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
         FirebaseRecyclerOptions<Cart> options =
                 new FirebaseRecyclerOptions.Builder<Cart>()
@@ -81,7 +80,7 @@ public class CartActivity extends AppCompatActivity {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CharSequence options[] = new CharSequence[]
+                        CharSequence[] options = new CharSequence[]
                                 {
                                         "Edit",
                                         "Remove"
@@ -92,7 +91,7 @@ public class CartActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (i==0){
-                                    Intent intent = new Intent(CartActivity.this,HomeChildFragment.class);
+                                    Intent intent = new Intent(CartActivity.this, HomeChildFragmentMen.class);
                                     intent.putExtra("pid", model.getPid());
                                     startActivity(intent);
                                 }

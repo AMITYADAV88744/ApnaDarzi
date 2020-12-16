@@ -2,13 +2,8 @@ package com.example.apnadarzi;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,50 +11,40 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.apnadarzi.Prevalent.Prevalent;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
 
-
-import java.util.HashMap;
-
-
-import javax.sql.DataSource;
-
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
-
-import static android.app.Activity.RESULT_OK;
 
 
 public class AccountFragment extends Fragment {
 
     private DatabaseReference parentDbName;
-    private TextView profile_name, my_order,upload_design;
-    private ImageView profile_image, upload_image;
+    private TextView profile_name, my_order, upload_design, profile_sett;
+    private CircleImageView profile_image;
     private Button logout;
+    private ProgressBar progressBar;
 
 
     private static final int GalleryPick = 1;
     private Uri ImageUri;
-    public String  downloadImageUrl;
+    public String downloadImageUrl;
     private StorageReference ProfileImagesRef;
     public ProgressDialog loadingBar;
+
 
     public static AccountFragment newInstance() {
         return new AccountFragment();
@@ -82,48 +67,21 @@ public class AccountFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        profile_name = (TextView) view.findViewById(R.id.pofile_name);
-        my_order = (TextView) view.findViewById(R.id.profile_order);
-        upload_design = (TextView) view.findViewById(R.id.pofile_dupload);
+        profile_name = view.findViewById(R.id.pofile_name);
+        my_order = view.findViewById(R.id.profile_order);
+        upload_design = view.findViewById(R.id.pofile_dupload);
 
-        profile_image = (ImageView) view.findViewById(R.id.profile_image);
-        logout = (Button) view.findViewById(R.id.sign_out);
-        upload_image = (ImageView) view.findViewById(R.id.photo_upload);
+        //profile_image = view.findViewById(R.id.profile_image);
+        logout = view.findViewById(R.id.sign_out);
+        profile_sett = view.findViewById(R.id.profile_setting);
         loadingBar = new ProgressDialog(getContext());
-        final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress);
+        progressBar = view.findViewById(R.id.progress);
 
 
-        // CircleImageView profile_image = view.findViewById(R.id.profile_image);
-       profile_name.setText(Prevalent.currentOnlineUser.getName());
-       Picasso.get().load(String.valueOf(ProfileImagesRef)).placeholder(R.drawable.applogo).into(profile_image);
+        profile_image = view.findViewById(R.id.profile_image);
 
-        Glide.with(this)
-                .load(Prevalent.currentOnlineUser.getImage()).placeholder(R.drawable.applogo)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, com.bumptech.glide.request.target.Target<Drawable> target, boolean isFirstResource) {
-                        progressBar.setVisibility(View.GONE);
-                        return false;
-                    }
+        userInfoDisplay(profile_image, profile_name);
 
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, com.bumptech.glide.request.target.Target<Drawable> target, com.bumptech.glide.load.DataSource dataSource, boolean isFirstResource) {
-                        progressBar.setVisibility(View.GONE);
-                        return false;
-                    }
-
-                })
-                .into(profile_image);
-
-
-
-      //  Glide.with(this /* context */)
-        //        .load(ProfileImagesRef)
-          //      .into(profile_image);
-
-
-// Load the image using Glide
-  //      Glide.with(this ).using(new FirebaseImageLoader()).load(ProfileImagesRef).into(profile_image);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +89,13 @@ public class AccountFragment extends Fragment {
                 Paper.book().destroy();
                 Intent intent = new Intent(getActivity(), SignInActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+        profile_sett.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), Profile_Update.class);
                 startActivity(intent);
             }
         });
@@ -148,16 +113,15 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), Upload_Design.class);
-               String mName = profile_name.getText().toString();
-
-                intent.putExtra("d_name",mName);
-
+                String d_name = profile_name.getText().toString();
+                intent.putExtra("d_name", d_name);
                 startActivity(intent);
-               // finish();
+                // finish();
 
             }
         });
-        profile_image.setOnClickListener(new View.OnClickListener() {
+
+      /*  profile_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 upload_image.setVisibility(View.VISIBLE);
@@ -165,6 +129,8 @@ public class AccountFragment extends Fragment {
             }
         });
 
+       */
+/*
         //upload image
         upload_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,6 +148,7 @@ public class AccountFragment extends Fragment {
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent, GalleryPick);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -246,20 +213,28 @@ public class AccountFragment extends Fragment {
             }
         });
     }
-   /* @Override
+
+ */
+
+    }
+
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         getLifecycle().addObserver(new TimberLogger(this));
     }
 
-    @Override
+   /* @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.message, menu);
     }
 
     */
 
+
+/*
     private void SaveProductInfoToDatabase()
     {
         HashMap<String, Object> userdataMap = new HashMap<>();
@@ -284,5 +259,31 @@ public class AccountFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+ */
+
+    private void userInfoDisplay(final ImageView profile_image, final TextView profile_name) {
+        DatabaseReference UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(Prevalent.currentOnlineUser.getPhone());
+        UsersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    if (dataSnapshot.child("image").exists()) {
+                        String image = dataSnapshot.child("image").getValue().toString();
+                        String name = dataSnapshot.child("name").getValue().toString();
+                        Picasso.get().load(image).placeholder(R.drawable.profile).into(profile_image);
+                        profile_name.setText(name);
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

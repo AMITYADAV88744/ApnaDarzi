@@ -1,8 +1,6 @@
 package com.example.apnadarzi;
+
 import android.content.Intent;
-import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
-import android.icu.util.Measure;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
-
 import com.example.apnadarzi.Model.Product;
 import com.example.apnadarzi.Prevalent.Prevalent;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,52 +27,40 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class Product_Detail extends AppCompatActivity {
+public class Product_Detail_Men extends AppCompatActivity {
     private Button addToCartButton;
     private ImageView productImage;
     private ElegantNumberButton numberButton;
-    private TextView productPrice,productDescription,productName;
-    private String productID="", state = "Normal";
+    private TextView productPrice, productDescription, productName;
+    private String productID = "", state = "Normal";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
         productID = getIntent().getStringExtra("pid");
-        addToCartButton =(Button) findViewById(R.id.pd_add_to_cart_button);
-        numberButton = (ElegantNumberButton) findViewById(R.id.number_btn);
-        productImage = (ImageView) findViewById(R.id.product_image_details);
-        productName = (TextView) findViewById(R.id.product_name_details);
-        productDescription = (TextView) findViewById(R.id.product_description_details);
-        productPrice = (TextView) findViewById(R.id.product_price_details);
-      //  getProductDetails(productID);
+        addToCartButton = findViewById(R.id.pd_add_to_cart_button);
+        numberButton = findViewById(R.id.number_btn);
+        productImage = findViewById(R.id.product_image_details);
+        productName = findViewById(R.id.product_name_details);
+        productDescription = findViewById(R.id.product_description_details);
+        productPrice = findViewById(R.id.product_price_details);
+        getProductDetails(productID);
         addToCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (state.equals("Order Placed") || state.equals("Order Shipped"))
-                {
-                    Toast.makeText(Product_Detail.this,"You can add Purchase more product, once your order is shipped or confirmed",Toast.LENGTH_LONG).show();
-                }
-                else {
+                if (state.equals("Order Placed") || state.equals("Order Shipped")) {
+                    Toast.makeText(Product_Detail_Men.this, "You can add Purchase more product, once your order is shipped or confirmed", Toast.LENGTH_LONG).show();
+                } else {
                     addingToCartList();
                 }
             }
         });
-
-
-      //  String productImage = getIntent().getStringExtra("image");
-
-     //   byte// = ((BitmapDrawable)productImage.getDrawable()).getBitmap();
-
-
-        //set data to views
-       // productImage.setImageByteMap(productImage);
-
     }
     @Override
     protected void onStart() {
         super.onStart();
-        CheckOrderState();
+        //CheckOrderState();
     }
 
     private void addingToCartList() {
@@ -105,9 +90,9 @@ public class Product_Detail extends AppCompatActivity {
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
-                                        Toast.makeText(Product_Detail.this,"Added to cart List",Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(Product_Detail.this,MainActivity.class);
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(Product_Detail_Men.this, "Added to cart List", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(Product_Detail_Men.this, MainActivity.class);
                                         startActivity(intent);
                                     }
                                 }
@@ -120,16 +105,16 @@ public class Product_Detail extends AppCompatActivity {
     }
 
     private void getProductDetails(String productID) {
-        DatabaseReference productsRef = FirebaseDatabase.getInstance().getReference().child("Products");
+        DatabaseReference productsRef = FirebaseDatabase.getInstance().getReference().child("Products").child("Male");
         productsRef.child(productID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    Product products=dataSnapshot.getValue(Product.class);
-                    productName.setText(products.getPname());
-                    productPrice.setText(products.getPrice());
-                    productDescription.setText(products.getDescription());
-                    Picasso.get().load(products.getImage()).into(productImage);
+                if (dataSnapshot.exists()) {
+                    Product product = dataSnapshot.getValue(Product.class);
+                    productName.setText(product.getPname());
+                    productPrice.setText(product.getPrice());
+                    productDescription.setText(product.getDescription());
+                    Picasso.get().load(product.getImage()).into(productImage);
 
                 }
             }

@@ -11,10 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.apnadarzi.Prevalent.Prevalent;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,9 +29,12 @@ import com.google.firebase.storage.UploadTask;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Random;
+
 public class Upload_Design extends AppCompatActivity {
-    private String InputDesignerName, Description, Price, Pname, saveCurrentDate, saveCurrentTime;
+    private String CategoryName, Description, Price, Pname, saveCurrentDate, saveCurrentTime;
     private Button AddNewProductButton;
+    private ImageView InputProductImage;
     private EditText InputProductName, InputProductDescription, InputProductPrice;
     private static final int GalleryPick = 1;
     private Uri ImageUri;
@@ -39,37 +42,30 @@ public class Upload_Design extends AppCompatActivity {
     private StorageReference DesignImagesRef;
     private DatabaseReference ProductsRef;
     private ProgressDialog loadingBar;
-    private ImageView InputDesignImage;
-    private EditText InputDesignCategory;
-    private EditText InputDesignTitle;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload__design);
 
 
-        InputDesignerName = getIntent().getExtras().get("d_name").toString();
-        DesignImagesRef = FirebaseStorage.getInstance().getReference().child("Design_Images");
+        //  CategoryName = getIntent().getExtras().get("d_name").toString();
+        DesignImagesRef = FirebaseStorage.getInstance().getReference().child("Design");
+        ProductsRef = FirebaseDatabase.getInstance().getReference().child("Designer");
 
-         ProductsRef = FirebaseDatabase.getInstance().getReference().child("Designers_Info");
 
-
-        AddNewProductButton = (Button) findViewById(R.id.add_new_design);
-        InputDesignImage = (ImageView) findViewById(R.id.select_design_image);
-        InputDesignCategory = (EditText) findViewById(R.id.design_category);
-        InputProductDescription = (EditText)findViewById(R.id.design_description);
-        InputDesignTitle = (EditText) findViewById(R.id.design_title);
-
+        AddNewProductButton = findViewById(R.id.add_new_design);
+        InputProductImage = findViewById(R.id.select_design_image);
+        InputProductName = findViewById(R.id.design_title);
+        InputProductDescription = findViewById(R.id.design_description);
+        InputProductPrice = findViewById(R.id.product_price);
         loadingBar = new ProgressDialog(this);
 
 
-        InputDesignImage.setOnClickListener(new View.OnClickListener() {
+        InputProductImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 OpenGallery();
             }
         });
@@ -99,13 +95,13 @@ public class Upload_Design extends AppCompatActivity {
         if (requestCode==GalleryPick  &&  resultCode==RESULT_OK  &&  data!=null)
         {
             ImageUri = data.getData();
-            InputDesignImage.setImageURI(ImageUri);
+            InputProductImage.setImageURI(ImageUri);
         }
     }
     private void ValidateProductData() {
         Description = InputProductDescription.getText().toString();
         Price = InputProductPrice.getText().toString();
-        Pname = InputDesignTitle.getText().toString();
+        Pname = InputProductName.getText().toString();
         if (ImageUri == null)
         {
             Toast.makeText(this, "Product image is mandatory...", Toast.LENGTH_SHORT).show();
@@ -141,11 +137,12 @@ public class Upload_Design extends AppCompatActivity {
         SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss");
         saveCurrentTime = currentTime.format(calendar.getTime());
+        Random random = new Random();
+        int id = (int) Math.abs(random.nextLong());
 
-        productRandomKey = saveCurrentDate + saveCurrentTime;
-
+        productRandomKey = String.valueOf(id);
 
         final StorageReference filePath = DesignImagesRef.child(ImageUri.getLastPathSegment() + productRandomKey + ".jpg");
 
@@ -191,32 +188,29 @@ public class Upload_Design extends AppCompatActivity {
         });
 
     }
-    private void SaveProductInfoToDatabase()
-    {
-        HashMap<String, Object> designMap = new HashMap<>();
-        designMap.put("pid", productRandomKey);
-        designMap.put("d_image", downloadImageUrl);
-        designMap.put("d_title", InputDesignTitle);
-        designMap.put("d_description", Description);
-        designMap.put("d_category", InputDesignCategory);
-        designMap.put("d_name",InputDesignerName);
 
+    private void SaveProductInfoToDatabase() {
+        HashMap<String, Object> productMap = new HashMap<>();
+        productMap.put("d_id", productRandomKey);
+        productMap.put("d_description", Description);
+        productMap.put("d_image", downloadImageUrl);
+        productMap.put("d_name", Prevalent.currentOnlineUser.getName());
+        productMap.put("d_contact", Prevalent.currentOnlineUser.getPhone());
+        productMap.put("d_category", Price);
+        productMap.put("d_title", Pname);
 
-        ProductsRef.child(productRandomKey).updateChildren(designMap)
+        ProductsRef.child(productRandomKey).updateChildren(productMap)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task)
-                    {
-                        if (task.isSuccessful())
-                        {
-                            Intent intent = new Intent(Upload_Design.this, AccountFragment.class);
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(Upload_Design.this, MainActivity.class);
+                            finish();
                             startActivity(intent);
 
                             loadingBar.dismiss();
-                            Toast.makeText(Upload_Design.this, "Product is added successfully..", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
+                            Toast.makeText(Upload_Design.this, "Design is added successfully..", Toast.LENGTH_SHORT).show();
+                        } else {
                             loadingBar.dismiss();
                             String message = task.getException().toString();
                             Toast.makeText(Upload_Design.this, "Error: " + message, Toast.LENGTH_SHORT).show();

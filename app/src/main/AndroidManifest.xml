@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -19,10 +20,24 @@
         <activity
             android:name=".My_Order"
             android:theme="@style/AppTheme2" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".Product_Detail" />
+        <activity android:name=".CartActivity" />
+        <activity android:name=".ConfirmFinalOrderActivity" />
+        <activity
+            android:name=".Product_Detail_Women"
+            android:theme="@style/AppTheme2" />
+        <activity
+            android:name=".Product_Detail_Men"
+            android:theme="@style/AppTheme2" />
+        <activity
+            android:name=".Product_Detail_Kid"
+            android:theme="@style/AppTheme2" />
+        <activity android:name=".Profile_Update" />
         <activity
             android:name=".SignInActivity"
             android:label="@string/app_name">

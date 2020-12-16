@@ -45,11 +45,10 @@
             app:menu="@menu/navigation" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floating_action_button"
+            android:id="@+id/cart_View"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:onClick="onFabClicked"
             app:fabSize="normal"
             app:layout_anchor="@id/navigation"
             app:layout_anchorGravity="top|end"

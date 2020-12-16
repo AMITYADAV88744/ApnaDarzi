@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.apnadarzi.Interface.IOnBackPressed;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView navigation;
     private Toolbar toolbar;
+    private FloatingActionButton Cart_view;
 
 
 
@@ -35,10 +37,19 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(adapter.getCount() - 1);
         navigation = findViewById(R.id.navigation);
+        Cart_view = findViewById(R.id.cart_View);
         BottomNavItemSelectedListener listener = new BottomNavItemSelectedListener(viewPager, toolbar);
         navigation.setOnNavigationItemSelectedListener(listener);
         bindNavigationDrawer();
         initTitle();
+
+        Cart_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initTitle() {
@@ -60,14 +71,14 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(listener);
     }
 
-    public void onFabClicked(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);    }
-    @Override public void onBackPressed() {
+
+    @Override
+    public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.navigation);
         if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
             super.onBackPressed();
         }
     }
+
 
 }
