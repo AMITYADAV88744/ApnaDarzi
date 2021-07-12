@@ -36,23 +36,15 @@ public class DesignerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-      //  setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
         View rootView=inflater.inflate(R.layout.fragment_designer,null);
         ProductsRef = FirebaseDatabase.getInstance().getReference().child("Designer");
        RatingBar simpleRatingBar = rootView.findViewById(R.id.d_rating); // initiate a rating bar
         //Float ratingNumber = simpleRatingBar.getRating();
-
         //REFERENCE
         rv = rootView.findViewById(R.id.recycler_menu);
-
         //LAYOUT MANAGER
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        //ADAPTER
-        //rv.setAdapter(new MyAdapter(getActivity(), designername));
-        // rv.setAdapter(new MyAdapter(getActivity(),rating));
-
         return rootView;
     }
 
@@ -79,7 +71,6 @@ public class DesignerFragment extends Fragment {
                     {
                         holder.txtDesignerName.setText(model.getD_name());
                         holder.txtDesignerRating.setRating(model.getD_rating());
-                    //    holder.txtProductPrice.setText("Price = " + model.getPrice() + "$");
                        Picasso.get().load(model.getD_image()).into(holder.imageView);
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override

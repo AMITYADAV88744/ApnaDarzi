@@ -1,16 +1,15 @@
 package com.example.apnadarzi;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.apnadarzi.Model.MyOrder;
 import com.example.apnadarzi.Prevalent.Prevalent;
@@ -19,7 +18,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 public class My_Order extends AppCompatActivity {
 
@@ -31,22 +29,31 @@ public class My_Order extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my__order);
         //Action Bar
-       ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setTitle("My Order");
 
 
         OrderRef = FirebaseDatabase.getInstance().getReference().child("Orders")
-        .child(Prevalent.currentOnlineUser.getPhone());
+                .child(Prevalent.currentOnlineUser.getPhone());
 
         // Recycler View
         recyclerView = findViewById(R.id.recycler_my_order);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -63,7 +70,6 @@ public class My_Order extends AppCompatActivity {
                         holder.txtOrderName.setText(model.getOrder_no());
                         holder.txtOrderStatus.setText(model.getState());
                         holder.txtOrderPrice.setText("Price = " + model.getTotalAmount() + "$");
-                        Picasso.get().load(model.getImage()).into(holder.imageView2);
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

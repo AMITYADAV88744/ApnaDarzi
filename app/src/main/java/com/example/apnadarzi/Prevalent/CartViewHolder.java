@@ -13,6 +13,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public TextView txtProductName,txtProductPrice,txtProductQuantity;
     private ItemClickListner itemClickListner;
 
+
     public CartViewHolder(View itemView) {
         super(itemView);
         txtProductName = itemView.findViewById(R.id.cart_product_name);
@@ -22,7 +23,8 @@ public class CartViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public void onClick(View view) {
-       itemClickListner.onClick(view,getAdapterPosition(),false);
+
+        itemClickListner.onClick(view, getAdapterPosition(), false);
     }
 
     public void setItemClickListner(ItemClickListner itemClickListner) {

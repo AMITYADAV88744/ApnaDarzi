@@ -7,13 +7,20 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <meta-data
+        android:name="com.google.android.gms.wallet.api.enabled"
+        android:value="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".Payment_Method"
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".Upload_Design"
             android:theme="@style/AppTheme2" />
@@ -26,8 +33,12 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".CartActivity" />
-        <activity android:name=".ConfirmFinalOrderActivity" />
+        <activity
+            android:name=".CartActivity"
+            android:theme="@style/AppTheme2" />
+        <activity
+            android:name=".ConfirmFinalOrderActivity"
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".Product_Detail_Women"
             android:theme="@style/AppTheme2" />

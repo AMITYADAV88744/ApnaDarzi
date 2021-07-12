@@ -72,7 +72,7 @@ public class HomeChildFragmentMen extends Fragment implements View.OnClickListen
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), Product_Detail_Men.class);
 
-                intent.putExtra("pid", ProductId.get(i));
+                intent.putExtra("pid", String.valueOf(ProductId.get(i)));
 
                 startActivity(intent); //start activity
 
@@ -99,6 +99,7 @@ public class HomeChildFragmentMen extends Fragment implements View.OnClickListen
     //My Custom Adapter for GridView
 
     public void LoadDataFromFirebase() {
+        onStart();
         mdata.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

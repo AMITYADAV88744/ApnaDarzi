@@ -35,7 +35,7 @@
                 android:layout_marginRight="100dp" />
 
 
-            <ProgressBar
+            <!--ProgressBar
                 android:id="@+id/progress"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -44,7 +44,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
             android:layout_marginEnd="130dp"
-            android:visibility="visible" />
+            android:visibility="visible" /-->
 
 
             <TextView

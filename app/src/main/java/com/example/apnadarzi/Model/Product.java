@@ -5,6 +5,7 @@ public class Product {
     String pname;
     String price;
     String description;
+    String image;
 
 
     String pid;
@@ -57,7 +58,6 @@ public class Product {
         this.s_name = s_name;
     }
 
-    String image;
     String category;
     String s_name;
 

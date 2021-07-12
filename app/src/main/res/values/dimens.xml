@@ -1,9 +1,17 @@
 <resources>
-  <!-- Default screen margins, per the Android Design guidelines. -->
-  <dimen name="activity_horizontal_margin">16dp</dimen>
-  <dimen name="activity_vertical_margin">16dp</dimen>
-  <dimen name="nav_header_vertical_spacing">8dp</dimen>
-  <dimen name="nav_header_height">176dp</dimen>
-  <dimen name="appbar_padding_top">8dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="padding_small">5dp</dimen>
+    <dimen name="margin_large">10dp</dimen>
+    <dimen name="margin_xlarge">30dp</dimen>
+
+    <dimen name="buy_button_width">300dp</dimen>
+    <dimen name="buy_button_height">48sp</dimen>
+    <dimen name="buy_button_min_width">200dp</dimen>
+
 
 </resources>

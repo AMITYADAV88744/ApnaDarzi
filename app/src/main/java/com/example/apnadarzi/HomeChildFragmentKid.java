@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 public class HomeChildFragmentKid extends Fragment implements View.OnClickListener {
     GridView grid;
+
     ImageView profile_image;
     String pid;
 
@@ -45,14 +46,12 @@ public class HomeChildFragmentKid extends Fragment implements View.OnClickListen
     }
 
 
-        @Override
-        public void onCreate(@Nullable Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setHasOptionsMenu(true);
-            getLifecycle().addObserver(new TimberLogger(this));
-        }
-
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        getLifecycle().addObserver(new TimberLogger(this));
+    }
 
 
     @Nullable
@@ -73,7 +72,7 @@ public class HomeChildFragmentKid extends Fragment implements View.OnClickListen
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), Product_Detail_Kid.class);
 
-                intent.putExtra("pid", ProductId.get(i));
+                intent.putExtra("pid", String.valueOf(ProductId.get(i)));
 
                 startActivity(intent); //start activity
 
@@ -100,6 +99,7 @@ public class HomeChildFragmentKid extends Fragment implements View.OnClickListen
     //My Custom Adapter for GridView
 
     public void LoadDataFromFirebase() {
+        onStart();
         mdata.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -143,6 +143,7 @@ public class HomeChildFragmentKid extends Fragment implements View.OnClickListen
 
         @Override
         public Object getItem(int position) {
+
             return null;
         }
 

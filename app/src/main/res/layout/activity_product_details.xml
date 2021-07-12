@@ -1,77 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#fff"
+    android:fillViewport="true"
     tools:context=".Product_Detail_Women">
 
-    <ImageView
-        android:id="@+id/product_image_details"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:scaleType="centerCrop" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/product_name_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/product_image_details"
-        android:text="Product Name"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        />
-    <TextView
-        android:id="@+id/product_description_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/product_name_details"
-        android:text="Product Description"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        />
-    <TextView
-        android:id="@+id/product_price_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/product_description_details"
-        android:text="Product Price"
-        android:textColor="@android:color/black"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        />
-    <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-        android:id="@+id/number_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="60dp"
-        app:textSize="16dp"
-        app:initialNumber="1"
-        app:finalNumber="10"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/product_price_details"
-        android:layout_marginTop="10dp"
-        tools:ignore="MissingClass">
+        <ImageView
+            android:id="@+id/product_image_details"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_marginTop="20dp" />
 
-    </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+        <TextView
+            android:id="@+id/product_name_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint=" Men's Tech Shell Full-Zip"
+            android:textColor="#333333"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-<Button
-    android:id="@+id/pd_add_to_cart_button"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryDark"
-    android:layout_margin="15dp"
-    android:layout_alignParentBottom="true"
-    android:text="Add to Cart"
-    android:textColor="@android:color/white"
-    android:textSize="18dp"
-    />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/product_price_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint=" $50.20"
+            android:textColor="#777777" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Description"
+            android:textColor="#333333"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/product_description_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:hint=" A versatile full-zip that you can wear all day long and even..."
+            android:textColor="#777777" />
+
+        <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+            android:id="@+id/number_btn"
+            android:layout_width="56dp"
+            android:layout_height="29dp"
+            android:layout_below="@+id/product_price_details"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:elevation="60dp"
+            app:finalNumber="10"
+            app:initialNumber="1"
+            app:textSize="8sp"
+            tools:ignore="MissingClass">
+
+        </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/number_btn"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/pd_add_to_cart_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_rounded"
+                android:gravity="center"
+                android:text="Add to Cart"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+
+            <Button
+                android:id="@+id/buynow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_rounded"
+                android:gravity="center"
+                android:text="Buy Now"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</ScrollView>

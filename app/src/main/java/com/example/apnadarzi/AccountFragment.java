@@ -75,7 +75,7 @@ public class AccountFragment extends Fragment {
         logout = view.findViewById(R.id.sign_out);
         profile_sett = view.findViewById(R.id.profile_setting);
         loadingBar = new ProgressDialog(getContext());
-        progressBar = view.findViewById(R.id.progress);
+      //  progressBar = view.findViewById(R.id.progress);
 
 
         profile_image = view.findViewById(R.id.profile_image);
@@ -274,7 +274,7 @@ public class AccountFragment extends Fragment {
                         String name = dataSnapshot.child("name").getValue().toString();
                         Picasso.get().load(image).placeholder(R.drawable.profile).into(profile_image);
                         profile_name.setText(name);
-                        progressBar.setVisibility(View.INVISIBLE);
+                        //   progressBar.setVisibility(View.INVISIBLE);
                     }
                 }
 

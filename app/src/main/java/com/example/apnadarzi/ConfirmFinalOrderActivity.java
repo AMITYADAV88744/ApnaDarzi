@@ -6,9 +6,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.apnadarzi.Prevalent.Prevalent;
@@ -20,23 +22,34 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class ConfirmFinalOrderActivity extends AppCompatActivity {
     private EditText nameEditText, phoneEditText, addressEditText, cityEditText;
     private Button confirmOrderBtn;
-    private String totalAmount = "";
+    RadioButton googlePayButton;
     private int order_no;
+    String pay_status = "COD", pid, image;
+    private String totalAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_final_order);
+        //Action Bar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setTitle("Confirm Order");
 
+        image = getIntent().getStringExtra("image");
+
+        pid = getIntent().getStringExtra("pid");
+        //  quan=getIntent().getStringExtra("quan");
         totalAmount = getIntent().getStringExtra("Total Price");
         Toast.makeText(this, "Total Price = $ " + totalAmount, Toast.LENGTH_SHORT).show();
         confirmOrderBtn = findViewById(R.id.confirm_final_order_btn);
@@ -44,7 +57,11 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity {
         phoneEditText = findViewById(R.id.shippment_phone_number);
         addressEditText = findViewById(R.id.shippment_address);
         cityEditText = findViewById(R.id.shippment_city);
-        order_no = ThreadLocalRandom.current().nextInt();
+        order_no = (int) (Math.random() * Math.pow(8, 10));
+
+        googlePayButton = findViewById(R.id.google_pay);
+
+
         confirmOrderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,6 +69,16 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity {
             }
         });
         userInfoDisplay(nameEditText, phoneEditText, addressEditText);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void Check() {
@@ -64,18 +91,38 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity {
         } else if (TextUtils.isEmpty(cityEditText.getText().toString())) {
             Toast.makeText(this, "Please Provide Your City Name", Toast.LENGTH_SHORT).show();
         } else {
+            if (pay_status.equals("COD")) {
+                ConfirmOrder();
 
-            ConfirmOrder();
+            } else if (pay_status.equals("UPI")) {
+                Paymentmethod();
+            }
         }
     }
 
+    private void Paymentmethod() {
+        Intent intent = new Intent(ConfirmFinalOrderActivity.this, Payment_Method.class);
+        String address = addressEditText.getText().toString() + cityEditText.getText().toString();
+        intent.putExtra("buyername", nameEditText.getText().toString());
+        intent.putExtra("buyermobile", phoneEditText.getText().toString());
+        intent.putExtra("address", address);
+        intent.putExtra("Total Price", totalAmount);
+        intent.putExtra("order_no", String.valueOf(order_no));
+        intent.putExtra("pid", pid);
+
+
+        startActivity(intent);
+    }
+
+
     private void ConfirmOrder() {
+
         final String saveCurrentTime, saveCurrentDate;
         Calendar calForDate = Calendar.getInstance();
         SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd. yyy");
         saveCurrentDate = currentDate.format(calForDate.getTime());
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
-        saveCurrentTime = currentDate.format(calForDate.getTime());
+        saveCurrentTime = currentTime.format(calForDate.getTime());
         final DatabaseReference ordersRef = FirebaseDatabase.getInstance().getReference()
                 .child("Orders")
                 .child(Prevalent.currentOnlineUser.getPhone())
@@ -90,6 +137,9 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity {
         ordersMap.put("date", saveCurrentDate);
         ordersMap.put("time", saveCurrentTime);
         ordersMap.put("state", "Not Shipped");
+        ordersMap.put("pay_status", pay_status);
+        ordersMap.put("pid", pid);
+
         ordersRef.updateChildren(ordersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -115,18 +165,19 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void userInfoDisplay(final EditText nameEditText, final EditText phoneEditText, final EditText addressEditText) {
         DatabaseReference UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(Prevalent.currentOnlineUser.getPhone());
         UsersRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     String name = dataSnapshot.child("name").getValue().toString();
                     String phone = dataSnapshot.child("phone").getValue().toString();
                     String address = dataSnapshot.child("address").getValue().toString();
+                    String city = dataSnapshot.child("city").getValue().toString();
+                    cityEditText.setText(city);
                     nameEditText.setText(name);
                     phoneEditText.setText(phone);
                     addressEditText.setText(address);
@@ -140,4 +191,20 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void pay_method(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+        switch (view.getId()) {
+            case R.id.cod:
+                if (checked)
+                    pay_status = "COD";
+                break;
+            case R.id.google_pay:
+                if (checked)
+                    pay_status = "UPI";
+                break;
+        }
+
+    }
+
 }

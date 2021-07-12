@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.apnadarzi.Prevalent.Prevalent;
@@ -48,9 +49,12 @@ public class Upload_Design extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload__design);
+        //Action Bar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setTitle("Upload Design");
 
 
-        //  CategoryName = getIntent().getExtras().get("d_name").toString();
         DesignImagesRef = FirebaseStorage.getInstance().getReference().child("Design");
         ProductsRef = FirebaseDatabase.getInstance().getReference().child("Designer");
 
@@ -73,31 +77,39 @@ public class Upload_Design extends AppCompatActivity {
 
         AddNewProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 ValidateProductData();
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
-    private void OpenGallery(){
+    private void OpenGallery() {
         Intent galleryIntent = new Intent();
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent, GalleryPick);
     }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode==GalleryPick  &&  resultCode==RESULT_OK  &&  data!=null)
-        {
+        if (requestCode == GalleryPick && resultCode == RESULT_OK && data != null) {
             ImageUri = data.getData();
             InputProductImage.setImageURI(ImageUri);
         }
     }
+
     private void ValidateProductData() {
         Description = InputProductDescription.getText().toString();
         Price = InputProductPrice.getText().toString();

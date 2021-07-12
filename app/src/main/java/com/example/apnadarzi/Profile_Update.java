@@ -59,7 +59,7 @@ public class Profile_Update extends AppCompatActivity {
         closeTextBtn = findViewById(R.id.close_settings_btn);
         saveTextButton = findViewById(R.id.update_account_settings_btn);
 
-        userInfoDisplay(profileImageView, fullNameEditText, userPhoneEditText, addressEditText);
+        userInfoDisplay(profileImageView, fullNameEditText, userPhoneEditText, addressEditText, cityEditText, stateEditText);
 
         closeTextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +97,8 @@ public class Profile_Update extends AppCompatActivity {
         });
 
          */
+
+
     }
 
     private void updateOnlyUserInfo() {
@@ -107,7 +109,7 @@ public class Profile_Update extends AppCompatActivity {
         userMap.put("address", addressEditText.getText().toString());
         userMap.put("city", cityEditText.getText().toString());
         userMap.put("state", stateEditText.getText().toString());
-        userMap.put("phoneOrder", userPhoneEditText.getText().toString());
+        userMap.put("phone", userPhoneEditText.getText().toString());
         ref.child(Prevalent.currentOnlineUser.getPhone()).updateChildren(userMap);
         startActivity(new Intent(Profile_Update.this, MainActivity.class));
         Toast.makeText(Profile_Update.this, "Profile Info update successfully.", Toast.LENGTH_SHORT).show();
@@ -183,7 +185,9 @@ public class Profile_Update extends AppCompatActivity {
                         HashMap<String, Object> userMap = new HashMap<>();
                         userMap.put("name", fullNameEditText.getText().toString());
                         userMap.put("address", addressEditText.getText().toString());
-                        userMap.put("phoneOrder", userPhoneEditText.getText().toString());
+                        userMap.put("state", stateEditText.getText().toString());
+                        userMap.put("city", cityEditText.getText().toString());
+                        userMap.put("phone", userPhoneEditText.getText().toString());
                         userMap.put("image", myUrl);
                         ref.child(Prevalent.currentOnlineUser.getPhone()).updateChildren(userMap);
                         progressDialog.dismiss();
@@ -202,7 +206,7 @@ public class Profile_Update extends AppCompatActivity {
 
     }
 
-    private void userInfoDisplay(final CircleImageView profileImageView, final EditText fullNameEditText, final EditText userPhoneEditText, final EditText addressEditText) {
+    private void userInfoDisplay(final CircleImageView profileImageView, final EditText fullNameEditText, final EditText userPhoneEditText, final EditText addressEditText, final EditText cityEditText, EditText stateEditText) {
         DatabaseReference UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(Prevalent.currentOnlineUser.getPhone());
         UsersRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -213,10 +217,15 @@ public class Profile_Update extends AppCompatActivity {
                         String name = dataSnapshot.child("name").getValue().toString();
                         String phone = dataSnapshot.child("phone").getValue().toString();
                         String address = dataSnapshot.child("address").getValue().toString();
+                        String city = dataSnapshot.child("city").getValue().toString();
+                        String state = dataSnapshot.child("state").getValue().toString();
+
                         Picasso.get().load(image).placeholder(R.drawable.profile).into(profileImageView);
                         fullNameEditText.setText(name);
                         userPhoneEditText.setText(phone);
                         addressEditText.setText(address);
+                        cityEditText.setText(city);
+                        stateEditText.setText(state);
                     }
                 }
 
