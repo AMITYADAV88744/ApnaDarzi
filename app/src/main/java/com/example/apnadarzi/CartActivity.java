@@ -1,5 +1,4 @@
 package com.example.apnadarzi;
-
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,7 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Objects;
 
 public class CartActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -41,9 +40,8 @@ public class CartActivity extends AppCompatActivity {
     TextView txtTotalAmount, txtMsg1;
     int overTotalPrice = 0;
     String pid, image;
-
-    private List<Cart> listData;
-
+    private static ArrayList<Cart> carts;
+    Integer[] totalprice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +60,6 @@ public class CartActivity extends AppCompatActivity {
         txtTotalAmount = findViewById(R.id.total_price);
         txtMsg1 = findViewById(R.id.msg1);
 
-        listData = new ArrayList<>();
 
         NextProcessBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,20 +102,19 @@ public class CartActivity extends AppCompatActivity {
                 pid = model.getPid();
                 image = model.getImage();
 
-                /*for(int i=0; i<price.size(); i++)
-                {
-                    overTotalPrice=overTotalPrice+price.get(i);
+                carts = new ArrayList<Cart>();
+                for (int i = 0; i < getSnapshots().size(); i++) {
+                    carts.add(new Cart(model.getPrice() * model.getQuantity())
+                            // MyData.drawableArray[i]
+                    );
+
+                }
+                totalprice = new Integer[carts.size()];
+                for (int i = 0; i < totalprice.length; i++) {
+                    overTotalPrice += totalprice[i];
 
                 }
 
-                 */
-               /* int i=0;
-                while (i==position) {
-
-                    overTotalPrice =overTotalPrice + ((Integer.parseInt(model.getPrice()))) * Integer.parseInt(model.getQuantity());
-                    i++;
-                }
-                */
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -137,7 +133,7 @@ public class CartActivity extends AppCompatActivity {
                                     final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
                                     final HashMap<String, Object> cartMap = new HashMap<>();
 
-                                    cartMap.put("quantity", String.valueOf(Math.addExact(Integer.parseInt(model.getQuantity()), 1)));
+                                    cartMap.put("quantity", String.valueOf(Math.addExact(Integer.parseInt(String.valueOf(model.getQuantity())), 1)));
 
                                     cartListRef.child("User view").child(Prevalent.currentOnlineUser.getPhone()).child("Products").child(String.valueOf(model.getPid())).updateChildren(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
@@ -160,7 +156,7 @@ public class CartActivity extends AppCompatActivity {
                                     });
                                 }
                                 if (i == 1) {
-                                    if (model.getQuantity().equals(String.valueOf(1))) {      //check quantity of product
+                                    if (Objects.equals(model.getQuantity(), 1)) {      //check quantity of product
                                         cartListRef.child("User view")
                                                 .child(Prevalent.currentOnlineUser.getPhone())
                                                 .child("Products")                                     //if 1 then delete
@@ -182,7 +178,7 @@ public class CartActivity extends AppCompatActivity {
                                         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
                                         final HashMap<String, Object> cartMap = new HashMap<>();
 
-                                        cartMap.put("quantity", String.valueOf(Math.subtractExact(Integer.parseInt(model.getQuantity()), 1)));
+                                        cartMap.put("quantity", String.valueOf(Math.subtractExact(Integer.parseInt(String.valueOf(model.getQuantity())), 1)));
 
                                         cartListRef.child("User view").child(Prevalent.currentOnlineUser.getPhone()).child("Products").child(String.valueOf(model.getPid())).updateChildren(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
@@ -217,8 +213,6 @@ public class CartActivity extends AppCompatActivity {
             public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_items_layout,parent,false);
                 CartViewHolder holder = new CartViewHolder(view);
-
-
                 return holder;
             }
 

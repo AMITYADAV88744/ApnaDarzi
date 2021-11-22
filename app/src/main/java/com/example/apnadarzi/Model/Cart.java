@@ -1,17 +1,20 @@
 package com.example.apnadarzi.Model;
 
-import android.content.Context;
-
 public class Cart {
-    private String pid;
-    private String pname;
-    private String price;
-    private String quantity;
-    private String discount;
-    private Context mContext;
+    private String pid, pname, discount;
+    private long price, quantity;
+
     private String image;
 
-    public Cart(String pid, String pname, String price, String quantity, String discount, String image) {
+    public Cart(long price) {
+        this.price = price;
+
+    }
+
+    public Cart() {
+    }
+
+    public Cart(String pid, String pname, long price, long quantity, String discount, String image) {
         this.pid = pid;
         this.pname = pname;
         this.price = price;
@@ -20,8 +23,6 @@ public class Cart {
         this.image = image;
     }
 
-    public Cart() {
-    }
 
     public String getImage() {
         return image;
@@ -47,19 +48,19 @@ public class Cart {
         this.pname = pname;
     }
 
-    public String getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
-    public String getQuantity() {
+    public long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
 
@@ -71,3 +72,4 @@ public class Cart {
         this.discount = discount;
     }
 }
+

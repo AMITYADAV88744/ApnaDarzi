@@ -13,14 +13,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.apnadarzi.Model.Users;
 import com.example.apnadarzi.Prevalent.Prevalent;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.rey.material.widget.CheckBox;
 
 import io.paperdb.Paper;
 
@@ -30,7 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog loadingBar;
     private TextView AdminLink, NotAdminLink;
     private String parentDbName = "Users";
-    private CheckBox chkBoxRememberMe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
